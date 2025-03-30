@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+    <br><br><br><br>
+    {% if plan.name == 'Pro' %}
+    <h3>Your subscription is now active!</h3>
+    <br><br>
+        {% if sub == 'active' %}
+        <a class="btn btn-primary text-light" href="/">Return Home</a>
+        <br><br>
+        <a class="btn btn-danger text-light" href="/cancel">Cancel Subscription</a>
+        {% else %}
+        <h3>You have access to the pro plan until the end of the period!</h3>
+        <a class="btn btn-primary text-light" href="/">Return Home</a>
+        {% endif %}
+    {% else %}
+    <h3>Your subscription is not currently active!</h3>
+    <h2>
+        <a href="{% url 'payments:checkout' %}" style="text-decoration:none;color:rgb(0, 183, 239);font-family: cursive;justify-content: space-between;font-size: 18px;">
+            You can subscribe to the pro plan for up to 100 links!
+        </a>
+    </h2>
+    </div>
+    {% endif %}
+{% endblock %}

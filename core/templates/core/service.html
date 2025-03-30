@@ -1,0 +1,74 @@
+<html lang="ru">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>TERMS OF SERVICE | cocoCam</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    body, html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                font-family: 'Roboto', sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #000;
+                color: #fff;
+            }
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.5;
+        }
+        .content h2 {
+            text-align: center;
+            font-size: 20px;
+            color: #ff00ff;
+            margin-bottom: 150px;
+        }
+        .terms {
+            text-align: center;
+            font-size: 3rem;
+            color: #ff00ff;
+            margin-bottom: 20px;
+        }
+  </style>
+ </head>
+ <body>
+    <div class="container">
+        <div class="content">
+        {% comment %} {% if title %} {% endcomment %}
+        <p class="terms">
+            <a href="/" style="text-decoration:none;color:rgb(255, 0, 230);">
+                COCOCAM
+            </a> 
+            LTD – TERMS OF SERVICE
+            {% comment %} {% for i in title %}
+                <div>
+                    <h3>{{ i.title }}</h3>
+                </div>
+            {% endfor %} {% endcomment %}
+           </p>
+            {% if title %}
+            <h2>
+                {% for i in title %}
+                    <div>
+                        <h3>{{ i.text }}</h3>
+                    </div>
+                {% endfor %}
+            </h2>
+            {% else %}
+            <h2>Информация в процессе обработки...</h2>
+            {% endif %}
+        </div>
+    </div>
+   {% comment %} <img class="background-image" height="1080" src="https://lifehacker.ru/wp-content/uploads/2024/06/orig_1717662880.jpg" width="1920"/> {% endcomment %}
+ </body>
+</html>

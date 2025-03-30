@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+    <main>
+        <div class="container text-center">
+            <br><br><br><br>
+            <h3>Your subscription is now active!</h3>
+            <br><br>
+            <a class="btn btn-primary text-light" href="/">Return Home</a>
+            <br><br>
+            <a class="btn btn-danger text-light" id="cancel-subscription-button" href="#" data-subscription-id="{{ subscription_id }}">Cancel Subscription</a>
+        </div>
+    </main>

@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+
+{% block content %}
+<div class="con">
+ <div class="content-left">
+    <h7>
+      Dashboard
+    </h7>
+  <div class="container">
+   <div class="logo">
+    <h1 style="color:rgb(0, 242, 255);">
+      Newest links
+    </h1>
+    </div>
+     <div class="mandatory" style="color:rgb(0, 242, 255);">
+      {% if newest_links %}
+       <h2>
+        {% for i in newest_links %}
+         <div>
+          <h3>{{ i.name }}
+            (<a href="{{ i.url }}" style="text-decoration:none;color:rgb(255, 194, 244);" target="_blank">
+                Open link
+            </a>)</h3> 
+            
+         </div>
+        {% endfor %}
+       </h2>
+        {% else %}
+         <h2>Ссылок нету</h2>
+        {% endif %}
+     </div>   
+  </div>
+ </div>
+</div>
+{% endblock %}

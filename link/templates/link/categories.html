@@ -1,0 +1,67 @@
+{% extends "core/base.html" %}
+
+{% block title %}Categories{% endblock %}
+
+
+{% block content %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Проверка аутентификации
+        const accessToken = localStorage.getItem('accessToken') || 
+                           document.cookie.match('(^|;)\\s*access_token\\s*=\\s*([^;]+)')?.pop();
+        
+        if (!accessToken) {
+            window.location.href = "{% url 'accounts:login' %}";
+        }
+    });
+    </script>
+
+<div class="con">
+ <div class="content-left">
+    <h7>
+        Categories
+    </h7> 
+ </div>
+</div>
+<div class="button">
+    <a href="{% url 'link:create_category' %}">
+        Create category
+    </a>
+</div>
+
+  <div class="cont">
+   <div class="logo">
+    <h1 style="color:rgb(0, 242, 255);">
+        Categories
+    </h1>
+    </div>
+     <div class="mandatory" style="color:rgb(0, 242, 255);">
+      {% if categories %}
+       <h2>
+        {% for i in categories %}
+         <div>
+          <h3>{{ i.name }} 
+            (<a href="{% url 'link:links' %}?category={{ i.id }}" style="text-decoration:none;color:rgb(255, 194, 244);">
+                View
+            </a>
+            |
+            <a href="{% url 'link:edit_category' i.id %}" style="text-decoration:none;color:rgb(255, 194, 244);">
+                Edit
+            </a>
+            |
+            <a href="{% url 'link:delete_category' i.id %}" style="text-decoration:none;color:rgb(255, 0, 0);">
+                Delete
+            </a>
+            )</h3> 
+         </div>
+        {% endfor %}
+       </h2>
+        {% else %}
+         <h2>Ссылок нету</h2>
+        {% endif %}
+     </div>   
+  </div>
+ </div>
+</div>
+{% endblock %}

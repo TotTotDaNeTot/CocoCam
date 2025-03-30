@@ -1,0 +1,59 @@
+{% extends "core/base.html" %}
+
+{% block title %}Links{% endblock %}
+
+
+{% block content %}
+<div class="con">
+ <div class="content-left">
+  <div class="container">
+     <div class="mandatory" style="color:rgb(0, 242, 255);">
+       <h2>
+        <form method="get"> 
+            <div class="mb-4">
+                <label class="block text-white mb-2" for="category">Category:</label>
+                <select id='category' class="w-full p-2 border border-blue-500 rounded" name='category'>
+                    {% for i in request.user.categories.all %}
+                    <option value="{{ i.name }}" {% if i.name == category %}selected{% endif %}>{{ i.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="bg-pink-500 text-white font-bold py-2 px-4 rounded-full hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+                Submit
+            </button>
+        </form>
+
+          {% comment %} <h1>
+            {% for i in request.user.categories.all %}
+              <a href="{% url 'link:links' %}?category={{ i.id }}">
+                  {{ i.name }}
+              </a>
+            {% endfor %}
+          </h1> {% endcomment %}
+        {% for i in links %}
+         <div>
+          <h3>{{ i.name }} 
+            (<a href="{{ i.url }}" style="text-decoration:none;color:rgb(255, 194, 244);" target="_blank">
+                Open link
+             </a>
+             |
+             <a href="{% url 'link:edit_link' i.id %}" style="text-decoration:none;color:rgb(255, 194, 244);">
+                Edit
+             </a>
+             |
+             <a href="{% url 'link:delete_link' i.id %}" style="text-decoration:none;color:rgb(255, 0, 0);;">
+                Delete
+             </a>
+            )</h3> 
+            {% if i.description %}
+                <p>{{ i.description }}</p>
+            {% endif %}
+         </div>
+        {% endfor %}
+       </h2>
+        
+     </div>   
+  </div>
+ </div>
+</div>
+{% endblock %}

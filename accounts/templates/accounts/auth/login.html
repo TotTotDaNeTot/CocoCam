@@ -1,0 +1,201 @@
+<html lang="ru">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Login | cocoCam</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    body, html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                font-family: 'Roboto', sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #000;
+                color: #fff;
+            }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .content {
+            max-width: 400px;
+            z-index: 2;
+        }
+        .content h1 {
+            text-align: center;
+            font-size: 3rem;
+            color: #ff00ff;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color:rgb(227, 164, 227);
+            margin-bottom: 20px;
+        }
+        .content .input-group {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .content .input-group input {
+            border: none;
+            background: none;
+            color: #fff;
+            outline: none;
+            flex: 1;
+            padding: 5px;
+        }
+        .content .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            cursor: pointer;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+        .content .btn i {
+            margin-left: 100px;
+        }
+        .content .terms {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.5;
+        }
+        .input-group input {
+            width: 350px;
+            padding: 10px 40px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 16px;
+        }
+        .content .input-group input:focus {
+            -webkit-box-shadow: 0px 0px 10px 20px #a321cf;
+            -maz-box-shadow: 0px 0px 10px 20px #a321cf;
+            box-shadow: 0px 0px 10px 20px #a321cf;
+        }
+        
+        .toggle-password a {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="container">
+   <div class="content">
+    <h1>
+        <a href="{% url 'core:index' %}" style="text-decoration:none;color: #ff00ff;">
+            cocoCam
+        </a>
+    </h1>
+    <h2>
+        Log in to your account
+       </h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <input placeholder="Username" type="username" name="username" 
+            id="Username" minlenght="3" maxlenght="20" required/>
+        </div>
+        <div class="input-group">
+            <input placeholder="Email" type="email" name="email" 
+            id='email' maxlenght="325" required/> 
+        </div>
+        <div class="input-group">
+            <input placeholder="Password" type="password" name="password" 
+            id='password' minlenght="8" maxlenght="20" required/> 
+            <a class="fas fa-eye toggle-password"></a>
+        </div>
+        {{ form.errors }}
+        <button class="btn">
+            Log in   
+        </button>
+    </form>
+    <p class="terms">
+        Not a member yet?
+     <a href="{% url 'accounts:register' %}" style="color: #fff;">
+      Sign up
+     </a>
+    </p>
+   </div>
+   </div>
+   <img class="background-image" height="1080" src="https://lifehacker.ru/wp-content/uploads/2024/06/orig_1717662880.jpg" width="1920"/>
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Проверяем токен в URL (для активации аккаунта)
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (token) {
+            localStorage.setItem('accessToken', token);
+            document.cookie = `access_token=${token}; path=/; samesite=Lax`;
+            window.location.href = "{% url 'core:index' %}";
+        }
+    
+        // Обработчик формы входа
+        const loginForm = document.querySelector('form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                try {
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    });
+    
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

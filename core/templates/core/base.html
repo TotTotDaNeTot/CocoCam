@@ -1,0 +1,144 @@
+{% load static %}
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>{% block title %}{% endblock %} | cocoCam</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link type="text/css" href="{% static 'core/css/styles.css' %}" rel="stylesheet"/>
+  <style>
+   {% comment %} body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 40px;
+            background-color: #2c2c2c;
+        }
+        .topnav a {
+            color:#ff00ff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 19px;
+
+            margin-top: 54xp;
+            text-align: left;
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+        .terms a {
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 30px;
+        }
+        .navbar .buttons a {
+            background-color: #ff00ff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+        }
+        .content-left {
+            max-width: 50%;
+        }
+        .content-left h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .content-left p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .content-left .apply-button {
+            background-color:#ff00ff;
+            padding: 15px 30px;
+            border-radius: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        } {% endcomment %}
+
+  </style>
+ </head>
+ <body>
+  <div class="navbar">
+    <p class="terms">
+        <a href="/" style="text-decoration:none;color:#ff00ff;">
+            COCOCAM
+        </a>
+    </p>
+        <div class="topnav">
+            <a href="#">Home</a>
+            <a href="{% url "core:about" %}">About</a>
+            <a href="{% url "core:pricing" %}">Pricing</a>
+            <div id="auth-links" style="display: none;">
+                <a href="{% url 'link:links' %}">Links</a>
+                <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+                <a href="{% url 'link:categories' %}">Categories</a>
+                <a href="{% url 'link:subscription' %}">Subscription</a>
+                <a href="{% url 'link:create_link' %}">Create link</a>
+                <form id="logout-form" action="{% url 'accounts:logout' %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" id="logout-link">Logout</button>
+                </form>
+            </div>
+            <div id="non-auth-links">
+                <a href="{% url 'accounts:login' %}">Login</a>
+                <a href="{% url 'accounts:register' %}">Sign Up</a>
+            </div>
+            {% comment %} {% if request.user.is_authenticated %}
+            <a href="{% url 'link:links' %}">Links</a>
+            <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+            <a href="{% url 'link:categories' %}">Categories</a>
+            <a href="{% url 'link:subscription' %}">Subscription</a>
+            {% endif %}
+        </div>
+   <div class="buttons">
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'link:create_link' %}">
+            Create link
+        </a>
+        <a href="{% url 'accounts:logout' %}">
+            Logout
+        </a>
+    {% else %}
+        <a href="{% url 'accounts:login' %}">
+        Login
+        </a>
+        <a href="{% url 'accounts:register' %}">
+        Sign Up
+        </a> {% endcomment %}
+   </div>
+  </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% comment %} {% endif %} {% endcomment %}
+    <div>
+        {% if request.user.is_authenticated %}
+        {% block conten %}{% endblock %}
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'core/js/auth/auth.js' %}"></script>
+    <!-- CSRF Token -->
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+ </body>
+</html>

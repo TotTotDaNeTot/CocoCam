@@ -1,0 +1,9 @@
+<!-- main/templates/registration/activation_email.html -->
+<html>
+<body>
+    <p>Hello!</p>
+    <p>Please activate your account by clicking the link below:</p>
+    <p><a href="{{ protocol }}://{{ domain }}{% url 'activate' uid=uid token=token %}">Activate your account</a></p>
+    <p>Thank you!</p>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<html lang="ru">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Register | cocoCam</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    body, html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                font-family: 'Roboto', sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #000;
+                color: #fff;
+            }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .content {
+            max-width: 400px;
+            z-index: 2;
+        }
+        .content h1 {
+            text-align: center;
+            font-size: 3rem;
+            color: #ff00ff;
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            width: 350px;
+            padding: 10px 40px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 16px;
+        }
+        .content .input-group {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .content .input-group input {
+            border: none;
+            background: none;
+            color: #fff;
+            outline: none;
+            flex: 1;
+            padding: 5px;
+        }
+        .content .input-group input:focus {
+            -webkit-box-shadow: 0px 0px 10px 20px #a321cf;
+            -maz-box-shadow: 0px 0px 10px 20px #a321cf;
+            box-shadow: 0px 0px 10px 20px #a321cf;
+        }
+        .content .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .content .btn i {
+            margin-left: 10px;
+        }
+        .content .terms {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.5;
+        }
+        .login {
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            background-color: transparent;
+            border: 1px solid #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .text {
+            font-size: 1rem;
+            transform: translate(35em, -33em) 
+            
+        }
+  </style>
+ </head>
+ <body>
+  <div class="container">
+   <div class="content">
+    <h1>
+        <a href="{% url 'core:index' %}" style="text-decoration:none;color: #ff00ff;">
+            cocoCam
+        </a>
+    </h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <input placeholder="Username" type="username" name="username" 
+            id="Username" minlenght="3" maxlenght="20" required/>
+        </div>
+        <div class="input-group">
+            <input placeholder="Email" type="email" name="email" 
+            id='email' maxlenght="325" required/> 
+        </div>
+        <div class="input-group">
+            <input placeholder="Password" type="password" name="password" 
+            id='password' minlenght="8" maxlenght="20" required/> 
+        </div>
+        <div class="input-group">
+            <input placeholder="Confirm the password" type="password" name="re_password" 
+            id='re_password' minlenght="8" maxlenght="20" required/> 
+        </div>
+        {% if error %}
+          <div class="error">{{ error }}</div>
+        {% endif %}
+        <button type="submit" class="btn">
+        Sign up
+        <i class="fas fa-arrow-right"></i>     
+        </button>
+        <span>{{ error }}</span>
+    </form>
+    
+    <p class="terms">
+     By signing up I accept the
+     <a href="{% url 'core:service' %}" style="color: #fff;">
+      Terms of Service
+     </a> 
+     and the
+     <a href="#" style="color: #fff;">
+      Privacy Policy.
+     </a>
+    </p> 
+    <a class="login" href="{% url 'accounts:login' %}">
+        Log in
+    </a>
+   </div>
+   </div>
+   <img class="background-image" height="1080" src="https://lifehacker.ru/wp-content/uploads/2024/06/orig_1717662880.jpg" width="1920"/>
+ </body>
+</html>
